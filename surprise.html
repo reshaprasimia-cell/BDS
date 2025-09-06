@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You Too!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ff9a9e);
+            background-size: 400% 400%;
+            animation: gradientShift 6s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .surprise-container {
+            text-align: center;
+            z-index: 10;
+            animation: zoomIn 1.5s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .main-message {
+            font-size: 4rem;
+            color: #e84393;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .sub-message {
+            font-size: 2rem;
+            color: #6c5ce7;
+            margin-bottom: 40px;
+            animation: fadeInUp 2s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .birthday-wish {
+            font-size: 1.5rem;
+            color: #2d3436;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            animation: slideInUp 2s ease-out 1s both;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .restart-btn {
+            background: linear-gradient(45deg, #fd79a8, #6c5ce7);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            animation: bounceIn 2s ease-out 1.5s both;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b9d;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        .confetti-piece:nth-child(2n) { background: #74b9ff; }
+        .confetti-piece:nth-child(3n) { background: #ffeaa7; }
+        .confetti-piece:nth-child(4n) { background: #55efc4; }
+        .confetti-piece:nth-child(5n) { background: #fd79a8; }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating Hearts */
+        .floating-hearts {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 30px;
+            animation: floatHeart 4s ease-out infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) rotate(360deg) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle Effects */
+        .sparkles {
+            position: fixed;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 25px;
+            animation: sparkleAnimation 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkleAnimation {
+            0%, 100% { 
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1.5) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        /* Fireworks */
+        .firework {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .firework-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: fireworkExplode 1s ease-out forwards;
+        }
+
+        @keyframes fireworkExplode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-message {
+                font-size: 2.5rem;
+            }
+            
+            .sub-message {
+                font-size: 1.5rem;
+            }
+            
+            .birthday-wish {
+                font-size: 1.2rem;
+                padding: 20px;
+                margin: 0 20px 30px;
+            }
+            
+            .restart-btn {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti"></div>
+    <div class="floating-hearts"></div>
+    <div class="sparkles">
+        <div class="sparkle" style="top: 15%; left: 20%;">✨</div>
+        <div class="sparkle" style="top: 25%; right: 25%;">⭐</div>
+        <div class="sparkle" style="bottom: 30%; left: 15%;">✨</div>
+        <div class="sparkle" style="bottom: 20%; right: 20%;">⭐</div>
+        <div class="sparkle" style="top: 60%; right: 10%;">✨</div>
+        <div class="sparkle" style="top: 70%; left: 10%;">⭐</div>
+    </div>
+
+    <div class="surprise-container">
+        <h1 class="main-message">I Love You Too! ❤️</h1>
+        <p class="sub-message">You make my heart skip a beat! 💕</p>
+        
+        <div class="birthday-wish">
+            <p>🎉 Happy Birthday to the most amazing person in my world! 🎉</p>
+            <br>
+            <p>May your special day be filled with endless joy, magical moments, and all the love your heart can hold. You deserve every happiness and more!</p>
+            <br>
+            <p>Here's to another year of adventures, laughter, and beautiful memories together! 🥳💖</p>
+        </div>
+        
+        <a href="index.html" class="restart-btn">Start Over 🎈</a>
+    </div>
+
+    <script>
+        // Confetti Animation
+        function createConfetti() {
+            const confettiContainer = document.querySelector('.confetti');
+            
+            for (let i = 0; i < 50; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.className = 'confetti-piece';
+                confettiPiece.style.left = Math.random() * window.innerWidth + 'px';
+                confettiPiece.style.animationDelay = Math.random() * 3 + 's';
+                confettiPiece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confettiContainer.appendChild(confettiPiece);
+            }
+        }
+
+        // Floating Hearts
+        function createFloatingHeart() {
+            const heartsContainer = document.querySelector('.floating-hearts');
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            
+            const heartSymbols = ['❤️', '💕', '💖', '💗', '💙', '💜', '🧡', '💛', '💚'];
+            heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.bottom = '-50px';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Fireworks Effect
+        function createFirework(x, y) {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = x + 'px';
+            firework.style.top = y + 'px';
+            document.body.appendChild(firework);
+            
+            const colors = ['#ff6b9d', '#74b9ff', '#ffeaa7', '#55efc4', '#fd79a8', '#a29bfe'];
+            
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework-particle';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = (i * 30) * (Math.PI / 180);
+                const distance = 50 + Math.random() * 50;
+                
+                particle.style.left = Math.cos(angle) * distance + 'px';
+                particle.style.top = Math.sin(angle) * distance + 'px';
+                
+                firework.appendChild(particle);
+            }
+            
+            setTimeout(() => {
+                firework.remove();
+            }, 1000);
+        }
+
+        // Random Fireworks
+        function randomFirework() {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            createFirework(x, y);
+        }
+
+        // Initialize animations
+        function init() {
+            createConfetti();
+            
+            // Create hearts periodically
+            setInterval(createFloatingHeart, 300);
+            
+            // Create random fireworks
+            setInterval(randomFirework, 1000);
+            
+            // Add click fireworks
+            document.addEventListener('click', function(e) {
+                createFirework(e.clientX, e.clientY);
+            });
+        }
+
+        // Start animations when page loads
+        window.addEventListener('load', init);
+
+        // Create sparkle trail on mouse move
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.9) { // 10% chance
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = Math.random() > 0.5 ? '✨' : '⭐';
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.fontSize = '20px';
+                sparkle.style.animation = 'sparkleAnimation 1.5s ease-out forwards';
+                sparkle.style.zIndex = '1000';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1500);
+            }
+        });
+
+        // Continuous confetti refill
+        setInterval(() => {
+            const confettiContainer = document.querySelector('.confetti');
+            // Clear old confetti
+            confettiContainer.innerHTML = '';
+            // Add new confetti
+            createConfetti();
+        }, 5000);
+
+        // Add celebration sound effect (visual feedback)
+        function celebrationPulse() {
+            document.body.style.animation = 'none';
+            document.body.offsetHeight; // Trigger reflow
+            document.body.style.animation = 'gradientShift 6s ease infinite';
+        }
+
+        setInterval(celebrationPulse, 3000);
+    </script>
+</body>
+</html>

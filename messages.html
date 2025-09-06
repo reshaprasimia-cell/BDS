@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Messages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(45deg, #ff9a56, #ff6b9d, #c44569, #f8b500);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .messages-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 1s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #e84393;
+            margin-bottom: 40px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 6px rgba(232, 67, 147, 0.3); }
+            to { text-shadow: 3px 3px 20px rgba(232, 67, 147, 0.8); }
+        }
+
+        .message-card {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateX(-100px);
+            opacity: 0;
+            animation: slideInFromLeft 0.8s ease forwards;
+            border-left: 5px solid #fd79a8;
+        }
+
+        .message-card:nth-child(even) {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            transform: translateX(100px);
+            animation: slideInFromRight 0.8s ease forwards;
+            border-left: none;
+            border-right: 5px solid #74b9ff;
+        }
+
+        .message-card:nth-child(2) { animation-delay: 0.2s; }
+        .message-card:nth-child(3) { animation-delay: 0.4s; }
+        .message-card:nth-child(4) { animation-delay: 0.6s; }
+        .message-card:nth-child(5) { animation-delay: 0.8s; }
+        .message-card:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes slideInFromLeft {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromRight {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .message-text {
+            font-size: 1.3rem;
+            color: #2d3436;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .message-signature {
+            font-size: 1.1rem;
+            color: #636e72;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .message-emoji {
+            font-size: 2rem;
+            margin: 0 10px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .next-btn {
+            background: linear-gradient(45deg, #fd79a8, #6c5ce7);
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .next-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #6c5ce7, #fd79a8);
+        }
+
+        .floating-elements {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            color: #ffeaa7;
+            font-size: 25px;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+        }
+
+        @media (max-width: 768px) {
+            .messages-container {
+                padding: 25px 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .message-card {
+                padding: 20px;
+                margin: 15px 0;
+            }
+            
+            .message-text {
+                font-size: 1.1rem;
+            }
+            
+            .next-btn {
+                padding: 15px 35px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="star" style="top: 10%; left: 10%;">⭐</div>
+        <div class="star" style="top: 20%; right: 15%;">✨</div>
+        <div class="star" style="top: 60%; left: 5%;">🌟</div>
+        <div class="star" style="bottom: 20%; right: 10%;">⭐</div>
+        <div class="star" style="bottom: 40%; left: 20%;">✨</div>
+    </div>
+
+    <div class="messages-container">
+        <h1>Sweet Messages Just For You 💝</h1>
+
+        <div class="message-card">
+            <div class="message-text">
+                "Every moment with you feels like a beautiful dream. Your smile lights up my world brighter than a thousand stars!" 
+                <span class="message-emoji">🌟</span>
+            </div>
+            <div class="message-signature">- With all my love</div>
+        </div>
+
+        <div class="message-card">
+            <div class="message-text">
+                "You make ordinary days feel extraordinary. Thank you for being the most amazing person in my life!" 
+                <span class="message-emoji">🎈</span>
+            </div>
+            <div class="message-signature">- Your biggest fan</div>
+        </div>
+
+        <div class="message-card">
+            <div class="message-text">
+                "Your kindness, your laughter, your beautiful heart - everything about you makes this world a better place!" 
+                <span class="message-emoji">💖</span>
+            </div>
+            <div class="message-signature">- Forever grateful</div>
+        </div>
+
+        <div class="message-card">
+            <div class="message-text">
+                "Happy Birthday to someone who deserves all the happiness, love, and cake in the world! May all your wishes come true!" 
+                <span class="message-emoji">🎂</span>
+            </div>
+            <div class="message-signature">- Celebrating you today</div>
+        </div>
+
+        <div class="message-card">
+            <div class="message-text">
+                "You're not just another year older, you're another year more wonderful! Here's to many more adventures together!" 
+                <span class="message-emoji">🎉</span>
+            </div>
+            <div class="message-signature">- Your adventure buddy</div>
+        </div>
+
+        <a href="worning.html" class="next-btn">Some Woring for you ...</a>
+    </div>
+
+    <script>
+        // Create floating bubbles
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.style.position = 'fixed';
+            bubble.style.width = Math.random() * 20 + 10 + 'px';
+            bubble.style.height = bubble.style.width;
+            bubble.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.3)`;
+            bubble.style.borderRadius = '50%';
+            bubble.style.pointerEvents = 'none';
+            bubble.style.left = Math.random() * window.innerWidth + 'px';
+            bubble.style.top = window.innerHeight + 'px';
+            bubble.style.animation = 'bubbleFloat 4s linear forwards';
+            bubble.style.zIndex = '-1';
+            
+            document.body.appendChild(bubble);
+            
+            setTimeout(() => {
+                bubble.remove();
+            }, 4000);
+        }
+
+        // Add bubble animation CSS
+        const bubbleStyle = document.createElement('style');
+        bubbleStyle.textContent = `
+            @keyframes bubbleFloat {
+                to {
+                    transform: translateY(-${window.innerHeight + 100}px) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(bubbleStyle);
+
+        // Create bubbles periodically
+        setInterval(createBubble, 500);
+
+        // Add click effect to message cards
+        document.querySelectorAll('.message-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
